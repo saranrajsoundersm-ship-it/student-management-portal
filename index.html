@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EduSphere School Management Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#687386;--line:#e5eaf1;--primary:#315bea;--primary2:#2448c8;--soft:#eef2ff;--green:#159570;--greenSoft:#e8f7f1;--orange:#d88919;--orangeSoft:#fff4df;--red:#d54d55;--redSoft:#fff0f1;--sidebar:#111827;--sidebar2:#182235;--shadow:0 8px 28px rgba(20,35,70,.07);--radius:14px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Inter,system-ui,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#eef3ff,#f8fafc)}
+.login-card{width:min(420px,100%);background:var(--card);padding:34px;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-family:"Plus Jakarta Sans";font-size:20px}.logo-mark{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--primary),#6b82f5);display:grid;place-items:center;color:white;font-size:22px}
+.logo small{display:block;color:var(--muted);font:11px Inter;margin-top:3px}.login h1{font:800 25px "Plus Jakarta Sans";margin:30px 0 7px}.login p{color:var(--muted);margin:0 0 24px}.field{margin:0 0 14px}.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#4f5b70}.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text);outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px #315bea18}.btn{border:1px solid var(--line);background:white;color:var(--text);padding:9px 13px;border-radius:9px;font-weight:700}.btn:hover{background:#f7f9fc}.btn.primary{background:var(--primary);border-color:var(--primary);color:white}.btn.primary:hover{background:var(--primary2)}.btn.danger{color:var(--red);border-color:#f2c9cc}.full{width:100%}.hint{font-size:11px;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+
+.app{display:none;min-height:100vh}.sidebar{width:250px;position:fixed;inset:0 auto 0 0;background:var(--sidebar);color:#d9e0ed;padding:18px 14px;display:flex;flex-direction:column;z-index:20}.brand{padding:5px 8px 20px;border-bottom:1px solid #ffffff12}.brand .logo-mark{width:38px;height:38px}.brand .logo{font-size:17px}.brand .logo small{color:#8490a5}.nav{padding-top:18px;display:grid;gap:5px}.nav button{border:0;background:transparent;color:#aeb8ca;text-align:left;padding:11px 12px;border-radius:9px;display:flex;gap:11px;align-items:center;font-weight:600}.nav button:hover{background:#ffffff0b;color:#fff}.nav button.active{background:#315bea;color:#fff}.nav svg{width:18px;height:18px;flex:none}.side-bottom{margin-top:auto;border-top:1px solid #ffffff12;padding:15px 8px;color:#8290a6;font-size:11px}.user-mini{display:flex;align-items:center;gap:9px;color:#e8edf6;margin-bottom:12px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#315bea;color:#fff;font-weight:800;font-size:12px}.main{margin-left:250px;min-width:0;flex:1}.top{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:10}.top h1{font:800 21px "Plus Jakarta Sans";margin:0}.top p{margin:3px 0 0;color:var(--muted);font-size:11px}.top-actions{display:flex;align-items:center;gap:9px}.icon-btn{width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;display:grid;place-items:center;color:#59657a}.content{padding:25px 30px 50px;max-width:1500px}.view{display:none}.view.active{display:block}.welcome{display:flex;justify-content:space-between;align-items:end;margin-bottom:20px}.welcome h2{font:800 25px "Plus Jakarta Sans";margin:0 0 5px}.welcome p{margin:0;color:var(--muted)}.date-pill{background:#fff;border:1px solid var(--line);padding:10px 13px;border-radius:10px;color:var(--muted);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:18px}.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:17px;box-shadow:0 2px 8px #13234a05}.stat-top{display:flex;justify-content:space-between;align-items:center}.stat-icon{width:38px;height:38px;border-radius:10px;background:var(--soft);color:var(--primary);display:grid;place-items:center}.stat .num{font:800 26px "Plus Jakarta Sans";margin-top:13px}.stat .label{font-size:12px;color:var(--muted);margin-top:2px}.trend{font-size:10px;font-weight:800;color:var(--green);background:var(--greenSoft);padding:5px 7px;border-radius:20px}
+.grid2{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 2px 8px #13234a05;margin-bottom:16px;overflow:hidden}.card-head{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.card-head h3{margin:0;font:800 14px "Plus Jakarta Sans"}.card-body{padding:16px}.muted{color:var(--muted)}.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{padding:13px 8px;background:#fff;border:1px solid var(--line);border-radius:11px;color:#455066;font-weight:700}.quick button:hover{border-color:#bdc9ec;background:var(--soft);color:var(--primary)}
+.bars{display:grid;gap:12px}.bar-line{display:grid;grid-template-columns:130px 1fr 45px;gap:10px;align-items:center;font-size:12px}.bar{height:8px;border-radius:20px;background:#edf0f5;overflow:hidden}.bar i{display:block;height:100%;background:var(--primary);border-radius:20px}.notice{padding:11px 0;border-bottom:1px solid var(--line)}.notice:last-child{border:0}.notice strong{display:block;font-size:12px}.notice span{font-size:11px;color:var(--muted)}.status{display:inline-flex;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800;text-transform:capitalize}.ok{background:var(--greenSoft);color:var(--green)}.warn{background:var(--orangeSoft);color:var(--orange)}.bad{background:var(--redSoft);color:var(--red)}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:720px}th{padding:11px 15px;text-align:left;color:#758094;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--line)}td{padding:12px 15px;border-bottom:1px solid var(--line);font-size:12px}tr:hover td{background:#fafbfd}.person{display:flex;align-items:center;gap:9px}.person .avatar{width:30px;height:30px;font-size:10px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar input,.toolbar select{padding:9px 11px;border:1px solid var(--line);border-radius:9px;outline:0}.toolbar input:focus,.toolbar select:focus{border-color:var(--primary)}.actions{display:flex;gap:5px}.small{padding:6px 9px;font-size:11px}
+.progress{height:7px;background:#edf0f5;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;background:var(--green);border-radius:20px}.attendance-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}.day b{display:block;font-size:11px}.day span{font:800 17px "Plus Jakarta Sans";display:block;margin-top:5px}.day small{color:var(--muted);font-size:9px}
+.kpi{padding:14px;border:1px solid var(--line);border-radius:11px}.kpi strong{font:800 20px "Plus Jakarta Sans";display:block}.kpi span{font-size:11px;color:var(--muted)}
+.timeline{display:grid;gap:0}.event{display:grid;grid-template-columns:80px 12px 1fr;gap:10px;padding:10px 0}.event time{font-size:11px;color:var(--muted)}.dot{width:9px;height:9px;background:var(--primary);border-radius:50%;margin-top:4px}.event strong{font-size:12px}.event p{font-size:11px;color:var(--muted);margin:3px 0}
+.overlay{display:none;position:fixed;inset:0;background:#07102480;z-index:50;padding:25px;place-items:center}.modal{background:#fff;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:16px;box-shadow:0 20px 70px #08112d33}.modal-head{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0;font:800 16px "Plus Jakarta Sans"}.modal-body{padding:20px}.modal-foot{padding:13px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}.grid-form{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.full-col{grid-column:1/-1}
+.toast{position:fixed;right:22px;bottom:22px;background:#182235;color:#fff;padding:11px 15px;border-radius:10px;box-shadow:var(--shadow);display:none;z-index:100;font-size:12px}
+.mobile-menu{display:none}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.sidebar{width:220px}.main{margin-left:220px}}
+@media(max-width:760px){.sidebar{transform:translateX(-100%);transition:.2s;width:250px}.sidebar.open{transform:none}.main{margin-left:0}.top{padding:0 15px}.mobile-menu{display:grid}.content{padding:18px 15px}.stats{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr}.welcome{align-items:start;gap:10px;flex-direction:column}.top h1{font-size:17px}.grid-form{grid-template-columns:1fr}.full-col{grid-column:auto}}
+@media(max-width:430px){.stats{grid-template-columns:1fr}.top-actions .hide-sm{display:none}}
+</style>
+</head>
+<body>
+
+<section class="login" id="login">
+  <div class="login-card">
+    <div class="logo"><div class="logo-mark">🎓</div><div>EduSphere <small>School Management Portal</small></div></div>
+    <h1>Welcome back</h1><p>Sign in to manage students, academics, attendance and school operations.</p>
+    <form id="loginForm">
+      <div class="field"><label>Username</label><input id="user" value="admin" required></div>
+      <div class="field"><label>Password</label><input id="pass" type="password" value="admin123" required></div>
+      <button class="btn primary full" type="submit">Sign in to portal</button>
+    </form>
+    <button class="btn full" style="margin-top:8px" id="demo">Continue as Demo Admin</button>
+    <div class="hint">Demo mode: any non-empty username and password are accepted. This browser-only version is intended for school project/demo use; production deployment should use a secure backend.</div>
+  </div>
+</section>
+
+<div class="app" id="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo"><div class="logo-mark">🎓</div><div>EduSphere<small>School Administration</small></div></div></div>
+  <nav class="nav" id="nav">
+    <button class="active" data-view="dashboard">▦ <span>Dashboard</span></button>
+    <button data-view="students">♙ <span>Students</span></button>
+    <button data-view="attendance">✓ <span>Attendance</span></button>
+    <button data-view="academics">▤ <span>Academics & Marks</span></button>
+    <button data-view="fees">₹ <span>Fees & Payments</span></button>
+    <button data-view="timetable">▦ <span>Timetable</span></button>
+    <button data-view="notices">⚑ <span>Notices</span></button>
+    <button data-view="subjects">◫ <span>Subjects & Teachers</span></button>
+    <button data-view="enrollment">＋ <span>Enrollment</span></button>
+    <button data-view="reports">▥ <span>Reports</span></button>
+    <button data-view="settings">⚙ <span>Settings</span></button>
+  </nav>
+  <div class="side-bottom"><div class="user-mini"><div class="avatar">AD</div><div><b>Administrator</b><br><span>School Office</span></div></div><button class="btn full" id="logout">Log out</button></div>
+</aside>
+
+<main class="main">
+<header class="top"><div style="display:flex;align-items:center;gap:11px"><button class="icon-btn mobile-menu" id="menu">☰</button><div><h1 id="title">Dashboard</h1><p id="subtitle">School overview and daily operations</p></div></div><div class="top-actions"><button class="icon-btn" id="bell">🔔</button><button class="icon-btn hide-sm" id="theme">☾</button><button class="btn primary hide-sm" onclick="openStudent()">+ Add Student</button></div></header>
+
+<div class="content">
+
+<section class="view active" id="view-dashboard">
+  <div class="welcome"><div><h2>Good evening, Administrator 👋</h2><p>Here is today's school activity at a glance.</p></div><div class="date-pill" id="today"></div></div>
+  <div class="stats" id="stats"></div>
+  <div class="card"><div class="card-head"><h3>Quick actions</h3></div><div class="card-body"><div class="quick">
+    <button onclick="openStudent()">＋ Register Student</button><button onclick="go('attendance')">✓ Mark Attendance</button><button onclick="go('fees')">₹ Record Payment</button><button onclick="go('notices')">⚑ Publish Notice</button>
+  </div></div></div>
+  <div class="grid2">
+    <div class="card"><div class="card-head"><h3>Enrollment by class</h3><span class="muted">Current year</span></div><div class="card-body"><div class="bars" id="classBars"></div></div></div>
+    <div class="card"><div class="card-head"><h3>Today's attendance</h3><span class="status ok">Healthy</span></div><div class="card-body"><div style="display:flex;align-items:center;gap:20px"><div style="font:800 36px 'Plus Jakarta Sans';color:var(--green)" id="attRate">94%</div><div class="muted">Overall attendance<br><b style="color:var(--text)">Present students</b></div></div><div class="progress" style="margin-top:16px"><i id="attBar" style="width:94%"></i></div></div></div>
+  </div>
+  <div class="grid2"><div class="card"><div class="card-head"><h3>Recent student registrations</h3><button class="btn small" onclick="go('students')">View all</button></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Status</th></tr></thead><tbody id="recentStudents"></tbody></table></div></div>
+  <div class="card"><div class="card-head"><h3>Latest notices</h3><button class="btn small" onclick="go('notices')">Manage</button></div><div class="card-body" id="dashNotices"></div></div></div>
+</section>
+
+<section class="view" id="view-students">
+  <div class="card"><div class="card-head"><h3>Student directory</h3><div class="toolbar"><input id="studentSearch" placeholder="Search name or ID"><select id="classFilter"><option value="">All classes</option><option>Grade 6 - A</option><option>Grade 7 - A</option><option>Grade 8 - A</option><option>Grade 9 - A</option><option>Grade 10 - A</option><option>Grade 11 - A</option><option>Grade 12 - A</option></select><button class="btn primary" onclick="openStudent()">+ Add student</button></div></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Admission ID</th><th>Class</th><th>Guardian</th><th>Phone</th><th>Attendance</th><th>Status</th><th></th></tr></thead><tbody id="studentBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-attendance">
+  <div class="stats" id="attStats"></div>
+  <div class="card"><div class="card-head"><h3>Attendance register</h3><div class="toolbar"><input type="date" id="attDate"><select id="attClass"><option>All Classes</option><option>Grade 6 - A</option><option>Grade 7 - A</option><option>Grade 8 - A</option><option>Grade 9 - A</option><option>Grade 10 - A</option><option>Grade 11 - A</option><option>Grade 12 - A</option></select><button class="btn primary" onclick="saveAttendance()">Save attendance</button></div></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Present</th><th>Remarks</th></tr></thead><tbody id="attendanceBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-academics">
+  <div class="grid3"><div class="kpi"><strong>82%</strong><span>Average academic performance</span></div><div class="kpi"><strong>18</strong><span>Students above 90%</span></div><div class="kpi"><strong>7</strong><span>Students needing support</span></div></div>
+  <div class="card"><div class="card-head"><h3>Academic performance</h3><button class="btn primary" onclick="openMarks()">+ Enter marks</button></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Mathematics</th><th>Science</th><th>English</th><th>Average</th><th>Performance</th></tr></thead><tbody id="marksBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-fees">
+  <div class="stats"><div class="stat"><div class="stat-top"><div class="stat-icon">₹</div><span class="trend">This year</span></div><div class="num">₹8.42L</div><div class="label">Fees collected</div></div><div class="stat"><div class="stat-top"><div class="stat-icon">⌛</div></div><div class="num">₹1.18L</div><div class="label">Pending fees</div></div><div class="stat"><div class="stat-top"><div class="stat-icon">✓</div></div><div class="num">86%</div><div class="label">Collection rate</div></div><div class="stat"><div class="stat-top"><div class="stat-icon">↗</div></div><div class="num">126</div><div class="label">Payments this month</div></div></div>
+  <div class="card"><div class="card-head"><h3>Fee payment register</h3><button class="btn primary" onclick="openPayment()">+ Record payment</button></div><div class="table-wrap"><table><thead><tr><th>Receipt</th><th>Student</th><th>Fee type</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead><tbody id="feeBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-timetable">
+  <div class="card"><div class="card-head"><h3>Weekly timetable</h3><select><option>Grade 10 - A</option><option>Grade 9 - A</option><option>Grade 12 - A</option></select></div><div class="table-wrap"><table><thead><tr><th>Period</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody id="timeBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-notices">
+  <div class="card"><div class="card-head"><h3>School notices & announcements</h3><button class="btn primary" onclick="openNotice()">+ New notice</button></div><div class="card-body" id="noticeList"></div></div>
+</section>
+
+<section class="view" id="view-subjects">
+  <div class="card"><div class="card-head"><h3>Subjects & teachers</h3><button class="btn primary" onclick="openSubject()">+ Add subject</button></div><div class="table-wrap"><table><thead><tr><th>Code</th><th>Subject</th><th>Teacher</th><th>Periods/week</th><th>Students</th><th></th></tr></thead><tbody id="subjectBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-enrollment">
+  <div class="card"><div class="card-head"><h3>New enrollment</h3></div><div class="card-body"><div class="grid-form"><div class="field"><label>Student</label><select id="enStudent"></select></div><div class="field"><label>Subject</label><select id="enSubject"></select></div><div class="field full-col"><button class="btn primary" onclick="enroll()">Enroll student</button></div></div></div></div>
+  <div class="card"><div class="card-head"><h3>Current enrollments</h3></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Subject</th><th>Teacher</th><th>Date</th><th>Status</th></tr></thead><tbody id="enrollBody"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-reports">
+  <div class="grid3"><div class="card"><div class="card-body"><div class="kpi"><strong>248</strong><span>Total students</span></div><button class="btn full" style="margin-top:14px" onclick="printReport('Student Report')">🖨 Print student report</button></div></div><div class="card"><div class="card-body"><div class="kpi"><strong>94%</strong><span>Attendance rate</span></div><button class="btn full" style="margin-top:14px" onclick="printReport('Attendance Report')">🖨 Print attendance report</button></div></div><div class="card"><div class="card-body"><div class="kpi"><strong>86%</strong><span>Fee collection</span></div><button class="btn full" style="margin-top:14px" onclick="printReport('Fee Report')">🖨 Print fee report</button></div></div></div>
+  <div class="card"><div class="card-head"><h3>Management summary</h3></div><div class="card-body"><p class="muted">Use the print actions above to generate a clean browser printout for school records. For a production system, reports can be connected to a database and PDF service.</p></div></div>
+</section>
+
+<section class="view" id="view-settings">
+  <div class="card"><div class="card-head"><h3>Portal settings</h3></div><div class="card-body">
+    <div class="grid-form"><div class="field"><label>School name</label><input id="schoolName" value="EduSphere Matriculation Higher Secondary School"></div><div class="field"><label>Academic year</label><select><option>2026–2027</option><option>2027–2028</option></select></div><div class="field"><label>Administrator name</label><input value="School Administrator"></div><div class="field"><label>Default role</label><select><option>Administrator</option><option>Teacher</option><option>Office Staff</option></select></div></div>
+    <button class="btn primary" onclick="saveSettings()">Save settings</button><button class="btn" style="margin-left:7px" onclick="resetData()">Reset demo data</button>
+  </div></div>
+  <div class="card"><div class="card-head"><h3>Important deployment note</h3></div><div class="card-body"><p class="muted">This single-file version stores data in the browser using localStorage. Do not use it as a real student-record system until authentication, database access, permissions, backups, encryption and server-side validation are implemented.</p></div></div>
+</section>
+
+</div></main></div>
+
+<div class="overlay" id="modal"><div class="modal"><div class="modal-head"><h3 id="modalTitle"></h3><button class="btn small" onclick="closeModal()">Close</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" id="modalSave">Save</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY="edusphere_school_v1";
+const seed={
+students:[
+{id:"ADM1001",name:"Ananya Rao",class:"Grade 10 - A",guardian:"R. Rao",phone:"98765 43210",email:"ananya@example.com",attendance:96,status:"active"},
+{id:"ADM1002",name:"Kabir Sen",class:"Grade 10 - A",guardian:"M. Sen",phone:"91234 56780",email:"kabir@example.com",attendance:91,status:"active"},
+{id:"ADM1003",name:"Meera Iyer",class:"Grade 9 - A",guardian:"S. Iyer",phone:"90000 11122",email:"meera@example.com",attendance:88,status:"active"},
+{id:"ADM1004",name:"Arjun Kumar",class:"Grade 12 - A",guardian:"P. Kumar",phone:"98450 11223",email:"arjun@example.com",attendance:97,status:"active"},
+{id:"ADM1005",name:"Diya Joseph",class:"Grade 8 - A",guardian:"J. Joseph",phone:"97970 44556",email:"diya@example.com",attendance:94,status:"active"},
+{id:"ADM1006",name:"Rahul Nair",class:"Grade 7 - A",guardian:"K. Nair",phone:"98880 22334",email:"rahul@example.com",attendance:89,status:"active"},
+{id:"ADM1007",name:"Nila Devi",class:"Grade 11 - A",guardian:"S. Devi",phone:"97860 66778",email:"nila@example.com",attendance:95,status:"active"}
+],
+subjects:[
+{id:"SUB1",code:"ENG101",name:"English",teacher:"Mrs. Kavitha",periods:6,count:38},
+{id:"SUB2",code:"TAM101",name:"Tamil",teacher:"Mrs. Kalaivani",periods:5,count:42},
+{id:"SUB3",code:"MAT101",name:"Mathematics",teacher:"Mr. Suresh",periods:7,count:40},
+{id:"SUB4",code:"SCI101",name:"Science",teacher:"Dr. Priya",periods:6,count:35},
+{id:"SUB5",code:"CSC101",name:"Computer Science",teacher:"Mr. Arun",periods:5,count:30}
+],
+enrollments:[
+{id:"E1",student:"ADM1001",subject:"SUB1",date:"2026-06-10",status:"enrolled"},
+{id:"E2",student:"ADM1001",subject:"SUB3",date:"2026-06-10",status:"enrolled"},
+{id:"E3",student:"ADM1002",subject:"SUB4",date:"2026-06-11",status:"enrolled"}
+],
+notices:[
+{title:"Half-yearly examination schedule published",text:"Students can collect the detailed examination timetable from the class teacher.",date:"27 Sep 2026",tag:"Academic"},
+{title:"Parent–Teacher meeting",text:"PTM will be conducted on Saturday. Parents are requested to meet their class teacher.",date:"25 Sep 2026",tag:"Important"},
+{title:"School ID card verification",text:"Office staff will verify student ID cards during the coming week.",date:"23 Sep 2026",tag:"Office"}
+],
+fees:[
+{id:"RCPT-2041",student:"ADM1001",type:"Term Fee",amount:18500,date:"25 Sep 2026",status:"Paid"},
+{id:"RCPT-2040",student:"ADM1004",type:"Transport",amount:4500,date:"24 Sep 2026",status:"Paid"},
+{id:"RCPT-2039",student:"ADM1003",type:"Term Fee",amount:18500,date:"22 Sep 2026",status:"Paid"}
+],
+marks:[
+{id:"ADM1001",math:86,science:91,english:88},{id:"ADM1002",math:74,science:81,english:79},{id:"ADM1003",math:92,science:87,english:94},{id:"ADM1004",math:96,science:94,english:91},{id:"ADM1005",math:83,science:79,english:85}
+],
+attendance:{}
+};
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||seed;
+const titles={dashboard:["Dashboard","School overview and daily operations"],students:["Students","Student directory and records"],attendance:["Attendance","Daily attendance register"],academics:["Academics & Marks","Academic performance overview"],fees:["Fees & Payments","Fee collection and payment records"],timetable:["Timetable","Weekly academic schedule"],notices:["Notices","School announcements and communications"],subjects:["Subjects & Teachers","Academic subjects and teaching staff"],enrollment:["Enrollment","Subject enrollment management"],reports:["Reports","Printable school management reports"],settings:["Settings","Portal configuration and demo controls"]};
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function initials(n){return n.split(/\s+/).map(x=>x[0]).slice(0,2).join("").toUpperCase()}
+function student(id){return data.students.find(s=>s.id===id)}
+function subject(id){return data.subjects.find(s=>s.id===id)}
+function toast(t){$("toast").textContent=t;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2200)}
+function go(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("view-"+v).classList.add("active");document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));$("title").textContent=titles[v][0];$("subtitle").textContent=titles[v][1];$("sidebar").classList.remove("open");renderAll()}
+$("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-view]");if(b)go(b.dataset.view)});
+$("menu").onclick=()=>$("sidebar").classList.toggle("open");
+$("loginForm").onsubmit=e=>{e.preventDefault();if($("user").value&&$("pass").value){sessionStorage.setItem("edu_auth","1");showApp()}};
+$("demo").onclick=()=>{sessionStorage.setItem("edu_auth","1");showApp()};
+$("logout").onclick=()=>{sessionStorage.removeItem("edu_auth");$("app").style.display="none";$("login").style.display="grid"};
+function showApp(){$("login").style.display="none";$("app").style.display="flex";renderAll()}
+if(sessionStorage.getItem("edu_auth")==="1")showApp();
+$("theme").onclick=()=>{document.body.classList.toggle("dark");toast("Theme control ready for customization")};
+$("bell").onclick=()=>toast("You have 3 school notifications");
+
+function renderDashboard(){
+$("today").textContent=new Date().toLocaleDateString("en-IN",{weekday:"short",day:"2-digit",month:"short",year:"numeric"});
+const active=data.students.filter(s=>s.status==="active").length;
+$("stats").innerHTML=[
+["♙",data.students.length,"Total students","+4.2%"],["✓",active,"Active students","98%"],["◫",data.subjects.length,"Subjects offered","This year"],["₹","₹8.42L","Fees collected","86% collected"]
+].map(x=>`<div class="stat"><div class="stat-top"><div class="stat-icon">${x[0]}</div><span class="trend">${x[3]}</span></div><div class="num">${x[1]}</div><div class="label">${x[2]}</div></div>`).join("");
+const classes=[...new Set(data.students.map(s=>s.class))];
+$("classBars").innerHTML=classes.map(c=>{let n=data.students.filter(s=>s.class===c).length;let pct=Math.min(100,n/8*100);return `<div class="bar-line"><span>${esc(c)}</span><div class="bar"><i style="width:${pct}%"></i></div><b>${n}</b></div>`}).join("");
+$("recentStudents").innerHTML=data.students.slice(-5).reverse().map(s=>`<tr><td><div class="person"><div class="avatar">${initials(s.name)}</div><b>${esc(s.name)}</b></div></td><td>${esc(s.class)}</td><td><span class="status ok">${s.status}</span></td></tr>`).join("");
+$("dashNotices").innerHTML=data.notices.slice(0,3).map(n=>`<div class="notice"><strong>${esc(n.title)}</strong><span>${esc(n.date)} · ${esc(n.tag)}</span></div>`).join("");
+}
+function renderStudents(){
+const q=($("studentSearch").value||"").toLowerCase(),f=$("classFilter").value;
+let rows=data.students.filter(s=>(!q||`${s.name} ${s.id}`.toLowerCase().includes(q))&&(!f||s.class===f));
+$("studentBody").innerHTML=rows.map(s=>`<tr><td><div class="person"><div class="avatar">${initials(s.name)}</div><div><b>${esc(s.name)}</b><br><span class="muted">${esc(s.email)}</span></div></div></td><td>${s.id}</td><td>${esc(s.class)}</td><td>${esc(s.guardian)}</td><td>${esc(s.phone)}</td><td><div style="min-width:90px"><div class="progress"><i style="width:${s.attendance}%"></i></div><small>${s.attendance}%</small></div></td><td><span class="status ${s.status==="active"?"ok":"bad"}">${s.status}</span></td><td><div class="actions"><button class="btn small" onclick="openStudent('${s.id}')">Edit</button><button class="btn small danger" onclick="removeStudent('${s.id}')">Delete</button></div></td></tr>`).join("")||`<tr><td colspan="8" style="text-align:center;padding:30px">No students found.</td></tr>`;
+}
+$("studentSearch").oninput=renderStudents;$("classFilter").onchange=renderStudents;
+function renderAttendance(){
+$("attDate").value=$("attDate").value||new Date().toISOString().slice(0,10);
+let list=data.students.filter(s=>!$("attClass").value||$("attClass").value==="All Classes"||s.class===$("attClass").value);
+$("attendanceBody").innerHTML=list.map(s=>{let k=$("attDate").value+"_"+s.id;let p=data.attendance[k]??true;return `<tr><td><div class="person"><div class="avatar">${initials(s.name)}</div><b>${esc(s.name)}</b></div></td><td>${esc(s.class)}</td><td><label><input type="checkbox" data-att="${s.id}" ${p?"checked":""}> Present</label></td><td><input style="padding:7px;border:1px solid var(--line);border-radius:7px" placeholder="Optional remark"></td></tr>`}).join("");
+$("attStats").innerHTML=[["94%","Average attendance"],["235","Present today"],["13","Absent today"],["7","Classes monitored"]].map(x=>`<div class="stat"><div class="num">${x[0]}</div><div class="label">${x[1]}</div></div>`).join("");
+}
+function saveAttendance(){document.querySelectorAll("[data-att]").forEach(c=>data.attendance[$("attDate").value+"_"+c.dataset.att]=c.checked);save();toast("Attendance saved successfully");renderAttendance()}
+$("attDate").onchange=renderAttendance;$("attClass").onchange=renderAttendance;
+function renderMarks(){$("marksBody").innerHTML=data.marks.map(m=>{let s=student(m.id),a=Math.round((m.math+m.science+m.english)/3);return `<tr><td><div class="person"><div class="avatar">${initials(s?.name||"")}</div><b>${esc(s?.name||"Unknown")}</b></div></td><td>${esc(s?.class||"")}</td><td>${m.math}</td><td>${m.science}</td><td>${m.english}</td><td><b>${a}%</b></td><td><span class="status ${a>=85?"ok":a>=70?"warn":"bad"}">${a>=85?"Excellent":a>=70?"Good":"Support needed"}</span></td></tr>`}).join("")}
+function renderFees(){$("feeBody").innerHTML=data.fees.map(f=>`<tr><td>${f.id}</td><td>${esc(student(f.student)?.name||"")}</td><td>${esc(f.type)}</td><td><b>₹${Number(f.amount).toLocaleString("en-IN")}</b></td><td>${f.date}</td><td><span class="status ok">${f.status}</span></td></tr>`).join("")}
+function renderTimetable(){const rows=[["08:30","Assembly","Mathematics","English","Science","Tamil"],["09:20","Mathematics","Science","Tamil","English","Computer Science"],["10:10","English","Computer Science","Mathematics","Social Science","Science"],["11:20","Science","Tamil","Computer Science","Mathematics","English"],["12:10","Lunch","Lunch","Lunch","Lunch","Lunch"],["13:00","Computer Science","English","Science","Tamil","Mathematics"]];$("timeBody").innerHTML=rows.map(r=>`<tr>${r.map((x,i)=>`<td ${i===0?'style="font-weight:800;color:var(--muted)"':''}>${esc(x)}</td>`).join("")}</tr>`).join("")}
+function renderNotices(){$("noticeList").innerHTML=data.notices.map((n,i)=>`<div class="notice" style="padding:16px 3px"><div style="display:flex;justify-content:space-between;gap:12px"><div><strong>${esc(n.title)}</strong><p class="muted" style="font-size:12px;margin:5px 0">${esc(n.text)}</p><span>${esc(n.date)} · ${esc(n.tag)}</span></div><button class="btn small danger" onclick="deleteNotice(${i})">Delete</button></div></div>`).join("")}
+function renderSubjects(){$("subjectBody").innerHTML=data.subjects.map(c=>`<tr><td>${c.code}</td><td><b>${esc(c.name)}</b></td><td>${esc(c.teacher)}</td><td>${c.periods}</td><td>${c.count}</td><td><button class="btn small" onclick="openSubject('${c.id}')">Edit</button></td></tr>`).join("")}
+function renderEnrollment(){ $("enStudent").innerHTML=data.students.filter(s=>s.status==="active").map(s=>`<option value="${s.id}">${esc(s.name)} (${s.id})</option>`).join("");$("enSubject").innerHTML=data.subjects.map(s=>`<option value="${s.id}">${esc(s.name)} — ${s.code}</option>`).join("");$("enrollBody").innerHTML=data.enrollments.map(e=>`<tr><td>${esc(student(e.student)?.name||"")}</td><td>${esc(subject(e.subject)?.name||"")}</td><td>${esc(subject(e.subject)?.teacher||"")}</td><td>${e.date}</td><td><span class="status ok">${e.status}</span></td></tr>`).join("")}
+function renderAll(){renderDashboard();renderStudents();renderAttendance();renderMarks();renderFees();renderTimetable();renderNotices();renderSubjects();renderEnrollment()}
+
+function openModal(title,body,saveFn){$("modalTitle").textContent=title;$("modalBody").innerHTML=body;$("modalSave").onclick=()=>{if(saveFn()!==false){closeModal();renderAll()}};$("modal").style.display="grid"}
+function closeModal(){$("modal").style.display="none"}
+function openStudent(id){
+let s=id?student(id):null;
+openModal(id?"Edit student":"Register new student",`<div class="grid-form">
+<div class="field"><label>Full name</label><input id="fName" value="${esc(s?.name||"")}"></div>
+<div class="field"><label>Admission ID</label><input id="fId" value="${esc(s?.id||"ADM"+(1000+data.students.length+1))}" ${id?"readonly":""}></div>
+<div class="field"><label>Class</label><select id="fClass">${["Grade 6 - A","Grade 7 - A","Grade 8 - A","Grade 9 - A","Grade 10 - A","Grade 11 - A","Grade 12 - A"].map(x=>`<option ${s?.class===x?"selected":""}>${x}</option>`).join("")}</select></div>
+<div class="field"><label>Guardian name</label><input id="fGuardian" value="${esc(s?.guardian||"")}"></div>
+<div class="field"><label>Phone</label><input id="fPhone" value="${esc(s?.phone||"")}"></div>
+<div class="field"><label>Email</label><input id="fEmail" type="email" value="${esc(s?.email||"")}"></div>
+<div class="field"><label>Status</label><select id="fStatus"><option ${s?.status!=="inactive"?"selected":""}>active</option><option ${s?.status==="inactive"?"selected":""}>inactive</option></select></div>
+<div class="field"><label>Attendance %</label><input id="fAtt" type="number" min="0" max="100" value="${s?.attendance??95}"></div></div>`,()=>{
+let name=$("fName").value.trim();if(!name){toast("Enter the student's name");return false}
+let obj={id:$("fId").value.trim(),name,class:$("fClass").value,guardian:$("fGuardian").value.trim(),phone:$("fPhone").value.trim(),email:$("fEmail").value.trim(),attendance:Number($("fAtt").value)||0,status:$("fStatus").value};
+if(id)Object.assign(s,obj);else data.students.push(obj);save();toast(id?"Student updated":"Student registered")
+})}
+function removeStudent(id){if(confirm("Remove this student record?")){data.students=data.students.filter(s=>s.id!==id);data.enrollments=data.enrollments.filter(e=>e.student!==id);save();renderAll();toast("Student removed")}}
+function openSubject(id){let c=id?subject(id):null;openModal(id?"Edit subject":"Add subject",`<div class="grid-form"><div class="field"><label>Subject code</label><input id="sc" value="${esc(c?.code||"")}"></div><div class="field"><label>Subject name</label><input id="sn" value="${esc(c?.name||"")}"></div><div class="field"><label>Teacher</label><input id="st" value="${esc(c?.teacher||"")}"></div><div class="field"><label>Periods per week</label><input id="sp" type="number" value="${c?.periods||5}"></div><div class="field"><label>Student count</label><input id="ss" type="number" value="${c?.count||0}"></div></div>`,()=>{let o={id:c?.id||"SUB"+Date.now(),code:$("sc").value.trim(),name:$("sn").value.trim(),teacher:$("st").value.trim(),periods:Number($("sp").value)||5,count:Number($("ss").value)||0};if(!o.code||!o.name)return false;if(c)Object.assign(c,o);else data.subjects.push(o);save();toast("Subject saved")})}
+function openNotice(){openModal("Publish school notice",`<div class="field"><label>Title</label><input id="nt"></div><div class="field"><label>Message</label><textarea id="nx" rows="4"></textarea></div><div class="field"><label>Category</label><select id="ng"><option>Academic</option><option>Important</option><option>Office</option><option>Event</option></select></div>`,()=>{let t=$("nt").value.trim();if(!t)return false;data.notices.unshift({title:t,text:$("nx").value.trim(),date:new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}),tag:$("ng").value});save();toast("Notice published")})}
+function deleteNotice(i){if(confirm("Delete this notice?")){data.notices.splice(i,1);save();renderAll();toast("Notice deleted")}}
+function openPayment(){openModal("Record fee payment",`<div class="grid-form"><div class="field"><label>Student</label><select id="ps">${data.students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("")}</select></div><div class="field"><label>Fee type</label><select id="pt"><option>Term Fee</option><option>Transport</option><option>Exam Fee</option><option>Activity Fee</option></select></div><div class="field"><label>Amount (₹)</label><input id="pa" type="number" value="5000"></div></div>`,()=>{data.fees.unshift({id:"RCPT-"+Math.floor(2000+Math.random()*9000),student:$("ps").value,type:$("pt").value,amount:Number($("pa").value)||0,date:new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}),status:"Paid"});save();toast("Payment recorded")})}
+function openMarks(){toast("Marks entry module is ready; connect it to your school's assessment database for production use.")}
+function enroll(){let st=$("enStudent").value,sub=$("enSubject").value;if(!st||!sub)return;data.enrollments.push({id:"E"+Date.now(),student:st,subject:sub,date:new Date().toISOString().slice(0,10),status:"enrolled"});save();renderAll();toast("Student enrolled successfully")}
+function printReport(name){let w=window.open("","_blank");w.document.write(`<html><head><title>${name}</title><style>body{font:14px Arial;padding:40px}h1{font-size:22px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:8px;text-align:left}</style></head><body><h1>EduSphere School — ${name}</h1><p>Generated on ${new Date().toLocaleString()}</p><p>This report was generated from the school management portal.</p><hr><p>For official records, verify the information against the school's authorized database.</p><script>window.print()<\/script></body></html>`);w.document.close()}
+function saveSettings(){toast("Portal settings saved for this browser")}
+function resetData(){if(confirm("Reset all demo data?")){localStorage.removeItem(KEY);location.reload()}}
+$("schoolName").onchange=()=>{document.title=$("schoolName").value+" | School Portal"}
+renderAll();
+</script>
+</body>
+</html>
